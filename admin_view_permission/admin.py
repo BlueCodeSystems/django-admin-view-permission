@@ -278,14 +278,14 @@ class AdminViewPermissionModelAdmin(AdminViewPermissionBaseModelAdmin,
             inline = new_class(self.model, self.admin_site)
             if request:
                 if not (inline.has_view_permission(request, obj) or
-                        inline.has_add_permission(request) or
+                        inline.has_add_permission(request, obj) or
                         inline._has_change_only_permission(request, obj) or
                         inline.has_delete_permission(request, obj)):
                     continue
                 if inline.has_view_permission(request, obj) and \
                         not inline._has_change_only_permission(request, obj):
                     inline.can_delete = False
-                if not inline.has_add_permission(request):
+                if not inline.has_add_permission(request, obj):
                     inline.max_num = 0
             inline_instances.append(inline)
 
@@ -320,7 +320,7 @@ class AdminViewPermissionModelAdmin(AdminViewPermissionBaseModelAdmin,
             inlines = self.get_inline_instances(request, obj)
             for inline in inlines:
                 if (inline._has_change_only_permission(request, obj) or
-                        inline.has_add_permission(request)):
+                        inline.has_add_permission(request, obj)):
                     extra_context['show_save'] = True
                     extra_context['show_save_and_continue'] = True
                     break

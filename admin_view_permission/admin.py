@@ -154,7 +154,7 @@ class AdminViewPermissionBaseModelAdmin(admin.options.BaseModelAdmin):
 
         if ((self.has_view_permission(request, obj) and (
             obj and not self._has_change_only_permission(request, obj))) or (
-                obj is None and not self.has_add_permission(request))):
+                obj is None and not self.has_add_permission(request, obj=None))):
             if self.fields:
                 # Set as readonly fields the specified fields
                 readonly_fields = flatten(self.fields)
